@@ -1,31 +1,34 @@
-[hr]
-[center][color=red][size=16pt][b]SVG AS IMAGE ATTACHMENT SUPPORT v1.3[/b][/size][/color]
-[url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4085]Link to Mod[/url]
-[/center]
-[hr]
+-------
 
-[color=blue][b][size=12pt][u]Introduction[/u][/size][/b][/color]
+# SVG AS IMAGE ATTACHMENT SUPPORT v1.3
+
+[**By Dougiefresh**](http://www.simplemachines.org/community/index.php?action=profile;u=253913) -> [Link to Mod](http://custom.simplemachines.org/mods/index.php?mod=4085)
+
+-------
+
+## Introduction
 This mod allows the forum to properly process a SVG file so that it is displayed as an image beneath the post, complete with original image dimensions and size, instead showing of a download-only link for the SVG file.  It will also attempt to convert the SVG image to either a PNG image, provided that the PNG function and the ImageMagic extensions are installed.  If the PNG functions aren't available, then it will convert it to a JPEG image.
 
 Upon install, this mod attempts to change any existing SVG file attachments so that they can be viewed.
 
 Upon uninstall, this mod removes the image dimensions from SVG images in order to prevent SVG thumbnails from being shown at full size.
 
-[color=blue][b][size=12pt][u]Admin Settings[/u][/size][/b][/color]
-There are two new buttons under [b]Admin[/b] -> [b]Forum[/b] -> [b]Attachments and Avatars[/b] -> [b]File Maintenance[/b], at the bottom of the page under [b]SVG Attachments[/b].
+## Admin Settings
+There are two new buttons under **Admin** -> **Forum** -> **Attachments and Avatars** -> **File Maintenance**, at the bottom of the page under **SVG Attachments**.
 
 The 1st button will populate existing SVG files that don't have image dimensions and mime-type data in the attachments table, while the 2nd button removes the image dimensions from the attachments table.
 
-[color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
+## Compatibility Notes
 This mod was tested on SMF 2.0.11 and SMF 2.1 Beta 3, but should work on SMF 2.0 and up.  SMF 2.1 Beta 2 and SMF 1.x will not be supported.
 
-[url=http://custom.simplemachines.org/mods/index.php?mod=1974]PM Attachments[/url] should be installed prior to this mod being installed if you want SVG attachments in Personal Messages to show up properly.
+[PM Attachments](http://custom.simplemachines.org/mods/index.php?mod=1974) should be installed prior to this mod being installed if you want SVG attachments in Personal Messages to show up properly.
 
-[color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
-The changelog can be viewed at [url=http://www.xptsp.com/board/free-modifications/svg-as-image-attachment-support/?tab=1]XPtsp.com[/url].
+## Changelog
+The changelog can be viewed at [XPtsp.com](http://www.xptsp.com/board/free-modifications/svg-as-image-attachment-support/?tab=1).
 
-[color=blue][b][size=12pt][u]License[/u][/size][/b][/color]
+## License
 Copyright (c) 2016 - 2018, Douglas Orend
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
