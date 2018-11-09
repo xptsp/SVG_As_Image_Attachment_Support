@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:SVGSupport</id>
 <name>SVG As Image Attachments Support</name>
-<version>1.0.1</version>
+<version>1.0.2</version>
 
 <!-------------------------------------------------------------------------->
 <!-- Source modifications                                                 -->
@@ -114,7 +114,7 @@
 
 function resizeImage]]></search>
 		<add><![CDATA[	elseif ($sizes[2] == 999)
-		$success = svg_resizeImage($destination, $sizes[0], $sizes[1], $max_width === null ? $sizes[0] : $max_width, $max_height === null ? $sizes[1] : $max_height);
+		$success = svg_resizeImage($destination, $max_width === null ? $sizes[0] : $max_width, $max_height === null ? $sizes[1] : $max_height);
 ]]></add>
 	</operation>
 </file>
@@ -185,6 +185,9 @@ function resizeImage]]></search>
 
 function template_attachment_repair()]]></search>
 		<add><![CDATA[
+		<div class="cat_bar">
+			<h3 class="catbg">', $txt['attachment_svg_header'], '</h3>
+		</div>
 		<div class="windowbg">
 			<span class="topslice"><span></span></span>
 			<div class="content">
@@ -227,7 +230,12 @@ function template_attachment_repair()]]></add>
 		
 function expandSVG(thumbID)
 {
-	document.getElementById('thumb_' + thumbID).classList.toggle('thumb_' + thumbID);
+	var img = document.getElementById('thumb_' + thumbID);
+	var link = document.getElementById('link_' + thumbID);
+	var tmp = img.src;
+	img.src = link.href;
+	link.href = tmp;
+	img.classList.toggle('thumb_' + thumbID);
 	return false;
 }]]></add>
 	</operation>

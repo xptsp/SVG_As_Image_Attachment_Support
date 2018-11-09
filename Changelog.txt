@@ -1,3 +1,7 @@
+v1.0.2 - February 26th, 2016
+o Fixed improperly expanding thumbnail issue.
+o Minor code revision to add further performance & security enhancements.
+
 v1.0.1 - February 24th, 2016
 o Added additional security check to "svg_getimagesize" function.
 o Added function to convert SVGs to PNG or JPG when ImageMagic extensions are detected.
