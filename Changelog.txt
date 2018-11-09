@@ -1,3 +1,8 @@
+v1.0.3 - February 27th, 2016
+o Fixed issue where width and/or height had floating value instead of integer value.
+o Fixed undefined index error within [b]svg_styleJS[/b] function.
+o Fixed measurement detection for pixels, inches, cm, mm, etc....
+
 v1.0.2 - February 26th, 2016
 o Fixed improperly expanding thumbnail issue.
 o Minor code revision to add further performance & security enhancements.

@@ -21,7 +21,7 @@ function svg_styleJS(&$attachment, &$element)
 	if (isset($element['thumbnail']['href']))
 	{
 		$element['thumbnail']['href2'] = $element['thumbnail']['href'];
-		if ($attachment['thumb_mime'] == 'image/svg+xml')
+		if (isset($attachment['thumb_mime']) && $attachment['thumb_mime'] == 'image/svg+xml')
 		{
 			$element['thumbnail']['href2'] .= '" class="thumb_' . $attachment['id_attach'];
 			$element['thumbnail']['style_def'] = '<style>.thumb_' . $attachment['id_attach'] . ' { width: ' . $attachment['thumb_width'] . 'px; height: ' . $attachment['thumb_height'] . 'px; }</style>';
@@ -43,14 +43,16 @@ function svg_getimagesize($filename, $svg_only = false)
 		return false;
 	if (preg_match('~(iframe|(?<!cellTextIs)html|eval|body|script\W|[CF]WS[\x01-\x0C])~i', $file))
 		return false;
-	if (!preg_match('#width=(?:"?)(\d+)(?:")?#', $matches[2], $width) || !preg_match('#height=(?:"?)(\d+)(?:")?#', $matches[2], $height))
+	$ex = '(|em|ex|px|in|cm|mm|pt|pc)';
+	if (!preg_match('#width="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $width) || !preg_match('#height="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $height))
 		return false;
-	preg_match('#width-smf_thumb=(?:"?)(\d+)(?:")?#', $matches[2], $rwidth);
-	preg_match('#height-smf_thumb=(?:"?)(\d+)(?:")?#', $matches[2], $rheight);
+	preg_match('#width-smf_thumb="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $rwidth);
+	preg_match('#height-smf_thumb="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $rheight);
 	$size = array(
 		0 => isset($rwidth[1]) ? $rwidth[1] : $width[1],
 		1 => isset($rheight[1]) ? $rheight[1] : $height[1],
 		2 => 999,
+		3 => '',
 		'mime' => 'image/svg+xml'
 	);
 	$size[3] = 'width="' . $size[0] . '" height="' . $size[1] . '"';
@@ -72,7 +74,8 @@ function svg_resizeImage($destName, $max_width, $max_height)
 		return false;
 	if (preg_match('~(iframe|(?<!cellTextIs)html|eval|body|script\W|[CF]WS[\x01-\x0C])~i', $file))
 		return false;
-	if (!preg_match('#width=(?:"?)(\d+)(?:")?#', $matches[2], $width) || !preg_match('#height=(?:"?)(\d+)(?:")?#', $matches[2], $height))
+	$ex = '(|em|ex|px|in|cm|mm|pt|pc)';
+	if (!preg_match('#width="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $width) || !preg_match('#height="(\d+)(|\.\d+)' . $ex . '?"#', $matches[2], $height))
 		return false;
 	$src_width = $width[1];
 	$src_height = $height[1];
@@ -95,8 +98,8 @@ function svg_resizeImage($destName, $max_width, $max_height)
 		return false;
 	
 	// Modify the SVG tag to include the resized image dimensions:
-	$msg = preg_replace('#width=(?:"?)(\d+)(?:")?#', '$0 width-smf_thumb="' . $dst_width . '"', $msg);
-	$msg = preg_replace('#height=(?:"?)(\d+)(?:")?#', '$0 height-smf_thumb="' . $dst_height . '"', $msg);
+	$msg = preg_replace('#width="(\d+)(|\.\d+)' . $ex . '?"#', '$0 width-smf_thumb="' . $dst_width . '$3"', $msg);
+	$msg = preg_replace('#height="(\d+)(|\.\d+)' . $ex . '?"#', '$0 height-smf_thumb="' . $dst_height . '$3"', $msg);
 	$file = str_replace($matches[2], $msg, $file);
 
 	// Save the image as ...
