@@ -1,3 +1,6 @@
+v1.0.4 - February 29th, 2016
+o Fixed error resulting from double comma in [b]ManageAttachments.php[/b].  Thanks, brynn!
+
 v1.0.3 - February 27th, 2016
 o Fixed issue where width and/or height had floating value instead of integer value.
 o Fixed undefined index error within [b]svg_styleJS[/b] function.

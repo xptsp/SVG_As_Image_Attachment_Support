@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:SVGSupport</id>
 <name>SVG As Image Attachments Support</name>
-<version>1.0.3</version>
+<version>1.0.4</version>
 
 <!-------------------------------------------------------------------------->
 <!-- Source modifications                                                 -->
@@ -57,7 +57,7 @@
 		'svg_populate' => 'svg_findDimensions',
 		'svg_remove' => 'svg_removeDimensions',
 		'svg_pm_populate' => 'svg_findDimensionsPM',
-		'svg_pm_remove' => 'svg_removeDimensionsPM',]]></add>
+		'svg_pm_remove' => 'svg_removeDimensionsPM']]></add>
 	</operation>
 </file>
 <file name="$sourcedir/PersonalMessage.php">
