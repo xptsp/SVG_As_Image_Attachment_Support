@@ -11,10 +11,10 @@ elseif (!defined('SMF')) // If we are outside SMF and can't find SSI.php, then t
 $smcFunc['db_query']('', '
 	UPDATE {db_prefix}attachments
 	SET width = {int:zero}, height = {int:zero}
-	WHERE filename LIKE {string:svg_image}',
+	WHERE mime_type LIKE {string:svg_mime}',
 	array(
 		'zero' => 0,
-		'svg_image' => '%.svg',
+		'svg_mime' => 'image/svg+xml',
 	)
 );
 

@@ -1,3 +1,7 @@
+v1.1 - December 11th, 2016
+o Changed mod uninstall code to look for mime type instead of file extensions.
+o Added SMF 2.1 support to the mod.  No changes for SMF 2.0.x-branch.
+
 v1.0.4 - February 29th, 2016
 o Fixed error resulting from double comma in [b]ManageAttachments.php[/b].  Thanks, brynn!
 

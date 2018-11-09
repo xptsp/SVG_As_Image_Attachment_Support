@@ -103,7 +103,7 @@ function svg_resizeImage($destName, $max_width, $max_height)
 	$file = str_replace($matches[2], $msg, $file);
 
 	// Save the image as ...
-	$fp_destination = fopen($destName, 'wb');
+	$fp_destination = fopen($destName, 'w');
 	fwrite($fp_destination, $file);
 	fclose($fp_destination);
 	return true;
@@ -208,7 +208,7 @@ function svg_removeDimensions($pm = false)
 	redirectExit('action=admin;area=manageattachments;sa=maintenance');
 }
 
-function svg_removeDimensionsPM($pm = false)
+function svg_removeDimensionsPM()
 {
 	svg_removeDimensions(true);
 }

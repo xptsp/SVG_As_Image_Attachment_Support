@@ -5,7 +5,7 @@
 	<id>Dougiefresh:SVGSupport</id>
 	<name>SVG As Image Attachments Support</name>
 	<type>modification</type>
-	<version>1.0.4</version>
+	<version>1.1</version>
 
 	<install for="2.0 - 2.0.99">
 		<readme parsebbc="true">readme.txt</readme>
@@ -17,6 +17,20 @@
 	<uninstall for="2.0 - 2.0.99">
 		<code>mod_uninstall.php</code>
 		<modification reverse="true">install_20x.xml</modification>
+		<modification reverse="true">language_english.xml</modification>
+		<remove-file name="$sourcedir/Subs-SVG.php" />		
+	</uninstall>
+
+	<install for="2.1 Beta 2">
+		<readme parsebbc="true">readme.txt</readme>
+		<modification>install_21x.xml</modification>
+		<modification>language_english.xml</modification>
+		<require-file name="Subs-SVG.php" destination="$sourcedir" />
+		<redirect timeout="5000" url="?action=admin;area=manageattachments;sa=svg_populate" />
+	</install>
+	<uninstall for="2.1 Beta 2">
+		<code>mod_uninstall.php</code>
+		<modification reverse="true">install_21x.xml</modification>
 		<modification reverse="true">language_english.xml</modification>
 		<remove-file name="$sourcedir/Subs-SVG.php" />		
 	</uninstall>

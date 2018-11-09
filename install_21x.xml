@@ -39,7 +39,9 @@
 </file>
 <file name="$sourcedir/ManageAttachments.php">
 	<operation>
-		<search position="before"><![CDATA[global $txt, $modSettings, $scripturl, $context, $options]]></search>
+		<search position="before"><![CDATA[function ManageAttachments()
+{
+	global $txt, $context]]></search>
 		<add><![CDATA[, $sourcedir]]></add>
 	</operation>
 	<operation>
@@ -47,7 +49,6 @@
 		<add><![CDATA[// Load some stuff for SVG functions:
 	require_once($sourcedir . '/Subs-SVG.php');
 	loadLanguage('ManageMaintenance');
-	$context['svg_pm_functions'] = isset($subActions['pmattachments']);
 
 	]]></add>
 	</operation>
@@ -55,42 +56,38 @@
 		<search position="before"><![CDATA['removeall' => 'RemoveAllAttachments']]></search>
 		<add><![CDATA[,
 		'svg_populate' => 'svg_findDimensions',
-		'svg_remove' => 'svg_removeDimensions',
-		'svg_pm_populate' => 'svg_findDimensionsPM',
-		'svg_pm_remove' => 'svg_removeDimensionsPM']]></add>
+		'svg_remove' => 'svg_removeDimensions']]></add>
 	</operation>
 </file>
-<file name="$sourcedir/PersonalMessage.php">
-	<operation error="ignore">
-		<search position="before"><![CDATA[require_once($sourcedir . '/Subs-Auth.php');]]></search>
-		<add><![CDATA[
-	require_once($sourcedir . '/Subs-SVG.php');]]></add>
+<file name="$sourcedir/Subs-Attachments.php">
+	<!-- createAttachment function -->
+	<operation>
+		<search position="before"><![CDATA[14 => 'iff']]></search>
+		<add><![CDATA[,
+		999 => 'svg']]></add>
 	</operation>
-	<operation error="ignore">
-		<search position="before"><![CDATA[$attachmentData = array();]]></search>
-		<add><![CDATA[
-	require_once($sourcedir . '/Subs-SVG.php');]]></add>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['tmp_name']);]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['tmp_name']);]]></add>
 	</operation>
-	<operation error="ignore">
-		<search position="replace"><![CDATA[@getimagesize($current_attach_dir . '/' . $attachID);]]></search>
-		<add><![CDATA[@svg_getimagesize($current_attach_dir . '/' . $attachID);]]></add>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination'] . '_thumb');]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination'] . '_thumb');]]></add>
 	</operation>
-	<operation error="ignore">
-		<search position="replace"><![CDATA[@getimagesize($filename . '_thumb');]]></search>
-		<add><![CDATA[@svg_getimagesize($filename . '_thumb');]]></add>
+	<operation>
+		<search position="replace"><![CDATA[// First, the dreaded security check. Sorry folks, but this should't be avoided
+	$size = @getimagesize($_SESSION['temp_attachments'][$attachID]['tmp_name']);
+	if (isset($validImageTypes[$size[2]]))]]></search>
+		<add><![CDATA[// First, the dreaded security check. Sorry folks, but this should't be avoided
+	require_once($sourcedir . '/Subs-SVG.php');
+	$size = @svg_getimagesize($_SESSION['temp_attachments'][$attachID]['tmp_name']);
+	if ($size[2] !== 999 && isset($validImageTypes[$size[2]]))]]></add>
 	</operation>
-	<operation error="ignore">
-		<search position="before"><![CDATA['psd', 'tiff', 'iff']]></search>
-		<add><![CDATA[, 'svg']]></add>
-	</operation>
-	<operation error="ignore">
-		<search position="before"><![CDATA[, thumb.height AS thumb_height]]></search>
-		<add><![CDATA[, thumb.mime_type AS thumb_mime]]></add>
-	</operation>
-	<operation error="ignore">
-		<search position="after"><![CDATA[if (!$attachmentData[$i]['thumbnail']['has_thumb'])]]></search>
-		<add><![CDATA[svg_styleJS($attachment, $attachmentData[$i]);
-			]]></add>
+	<operation>
+		<search position="replace"><![CDATA[$old_format = $size[2];
+			$size = @getimagesize($_SESSION['temp_attachments'][$attachID]['tmp_name']);]]></search>
+		<add><![CDATA[$old_format = $size[2];
+			$size = @svg_getimagesize($_SESSION['temp_attachments'][$attachID]['tmp_name']);]]></add>
 	</operation>
 </file>
 <file name="$sourcedir/Subs-Graphics.php">
@@ -109,47 +106,31 @@
 	</operation>
 	<operation>
 		<search position="after"><![CDATA[
-	return $success;
+
+	return false;
 }
 
+/**
+ * Resizes src_img proportionally to fit within max_width and max_height limits
+ * if it is too large.
+ * If GD2 is present, it'll use it to achieve better quality.
+ * It saves the new image to destination_filename, as preferred_format
+ * if possible, default is jpeg.
+ * @uses GD
+ *
+ * @param resource $src_img
+ * @param string $destName
+ * @param int $src_width
+ * @param int $src_height
+ * @param int $max_width
+ * @param int $max_height
+ * @param bool $force_resize = false
+ * @param int $preferred_format = 0
+ */
 function resizeImage]]></search>
-		<add><![CDATA[	elseif ($sizes[2] == 999)
-		$success = svg_resizeImage($destination, $max_width === null ? $sizes[0] : $max_width, $max_height === null ? $sizes[1] : $max_height);
-]]></add>
-	</operation>
-</file>
-<file name="$sourcedir/Subs-Post.php">
-	<operation>
-		<search position="before"><![CDATA[require_once($sourcedir . '/Subs-Graphics.php');]]></search>
 		<add><![CDATA[
-	require_once($sourcedir . '/Subs-SVG.php');]]></add>
-	</operation>
-	<operation>
-		<search position="before"><![CDATA[14 => 'iff']]></search>
-		<add><![CDATA[,
-		999 => 'svg']]></add>
-	</operation>
-	<operation>
-		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['tmp_name']);]]></search>
-		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['tmp_name']);]]></add>
-	</operation>
-	<operation>
-		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination']);]]></search>
-		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination']);]]></add>
-	</operation>
-	<operation>
-		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination'] . '_thumb');]]></search>
-		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination'] . '_thumb');]]></add>
-	</operation>
-	<operation>
-		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination']);]]></search>
-		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination']);]]></add>
-	</operation>
-	<operation>
-		<search position="replace"><![CDATA[// Do we have an image? If yes, we need to check it out!
-	if (isset($validImageTypes[$size[2]]))]]></search>
-		<add><![CDATA[// Do we have an image? If yes, we need to check it out!
-	if ($size[2] !== 999 && isset($validImageTypes[$size[2]]))]]></add>
+	elseif ($sizes[2] == 999)
+		return svg_resizeImage($destination, $max_width === null ? $sizes[0] : $max_width, $max_height === null ? $sizes[1] : $max_height);]]></add>
 	</operation>
 </file>
 
@@ -166,21 +147,10 @@ function resizeImage]]></search>
 		<add><![CDATA[<img src="', $attachment['thumbnail']['href2']]]></add>
 	</operation>
 </file>
-<file name="$themedir/PersonalMessage.template.php">
-	<operation error="ignore">
-		<search position="after"><![CDATA[<a href="', $attachment['href'], ';image"]]></search>
-		<add><![CDATA[' . $attachment['thumbnail']['style_def'] . ']]></add>
-	</operation>
-	<operation error="ignore">
-		<search position="replace><![CDATA[<img src="', $attachment['thumbnail']['href']]]></search>
-		<add><![CDATA[<img src="', $attachment['thumbnail']['href2']]]></add>
-	</operation>
-</file>
 <file name="$themedir/ManageAttachments.template.php">
 	<operation>
 		<search position="replace"><![CDATA[
-	</div>
-	<br class="clear" />';
+			<br class="clear">';
 }
 
 function template_attachment_repair()]]></search>
@@ -200,19 +170,6 @@ function template_attachment_repair()]]></search>
 					<p>', $txt['attachment_svg_remove'], '</p>
 					<input type="submit" name="submit" value="', $txt['maintain_run_now'], '" class="button_submit" />
 				</form>';
-	if ($context['svg_pm_functions'])
-		echo '
-				<hr />
-				<form action="', $scripturl, '?action=admin;area=manageattachments;sa=svg_pm_populate" method="post" accept-charset="', $context['character_set'], '">
-					<p>', $txt['attachment_svg_pm_populate'], '</p>
-					<input type="submit" name="submit" value="', $txt['maintain_run_now'], '" class="button_submit" />
-				</form>
-				<hr />
-				<form action="', $scripturl, '?action=admin;area=manageattachments;sa=svg_pm_remove" method="post" accept-charset="', $context['character_set'], '">
-					<p>', $txt['attachment_svg_pm_remove'], '</p>
-					<input type="submit" name="submit" value="', $txt['maintain_run_now'], '" class="button_submit" />
-				</form>
-			</div>';
 	echo '
 			<span class="botslice"><span></span></span>
 		</div>
