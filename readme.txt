@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]SVG AS IMAGE ATTACHMENT SUPPORT v1.1[/b][/size][/color]
+[center][color=red][size=16pt][b]SVG AS IMAGE ATTACHMENT SUPPORT v1.2[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4085]Link to Mod[/url]
 [/center]
 [hr]
@@ -17,7 +17,7 @@ There are two new buttons under [b]Admin[/b] -> [b]Forum[/b] -> [b]Attachments a
 The 1st button will populate existing SVG files that don't have image dimensions and mime-type data in the attachments table, while the 2nd button removes the image dimensions from the attachments table.
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
-This mod was tested on SMF 2.0.11 and SMF 2.1 Beta 2, but should work on SMF 2.0 and up.  SMF 1.x is not and will not be supported.
+This mod was tested on SMF 2.0.11 and SMF 2.1 Beta 3, but should work on SMF 2.0 and up.  SMF 2.1 Beta 2 and SMF 1.x will not be supported.
 
 [url=http://custom.simplemachines.org/mods/index.php?mod=1974]PM Attachments[/url] should be installed prior to this mod being installed if you want SVG attachments in Personal Messages to show up properly.
 
