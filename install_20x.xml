@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:SVGSupport</id>
+<name>SVG As Image Attachments Support</name>
+<version>1.0</version>
+
+<file name="$sourcedir/Subs-Graphics.php">
+	<operation>
+		<search position="before"><![CDATA[require_once($sourcedir . '/Subs-Package.php');]]></search>
+		<add><![CDATA[
+	require_once($sourcedir . '/Subs-SVG.php');]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$sizes = @getimagesize($destination);]]></search>
+		<add><![CDATA[$sizes = @svg_getimagesize($destination);]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$sizes = @getimagesize($source);]]></search>
+		<add><![CDATA[$sizes = @svg_getimagesize($source);]]></add>
+	</operation>
+	<operation>
+		<search position="after"><![CDATA[
+	return $success;
+}
+
+function resizeImage]]></search>
+		<add><![CDATA[	elseif ($sizes[2] == 999)
+		$success = svg_resizeImage($destination, $sizes[0], $sizes[1], $max_width === null ? $sizes[0] : $max_width, $max_height === null ? $sizes[1] : $max_height);
+]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/Subs-Post.php">
+	<operation>
+		<search position="before"><![CDATA[require_once($sourcedir . '/Subs-Graphics.php');]]></search>
+		<add><![CDATA[
+	require_once($sourcedir . '/Subs-SVG.php');]]></add>
+	</operation>
+	<operation>
+		<search position="before"><![CDATA[14 => 'iff']]></search>
+		<add><![CDATA[,
+		999 => 'svg']]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['tmp_name']);]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['tmp_name']);]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination']);]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination']);]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination'] . '_thumb');]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination'] . '_thumb');]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[$size = @getimagesize($attachmentOptions['destination']);]]></search>
+		<add><![CDATA[$size = @svg_getimagesize($attachmentOptions['destination']);]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[// Do we have an image? If yes, we need to check it out!
+	if (isset($validImageTypes[$size[2]]))]]></search>
+		<add><![CDATA[// Do we have an image? If yes, we need to check it out!
+	if ($size[2] !== 999 && isset($validImageTypes[$size[2]]))]]></add>
+	</operation>
+</file>
+<file name="$themedir/Display.template.php">
+	<operation>
+		<search position="before"><![CDATA[<img src="', $attachment['thumbnail']['href'], '" ]]></search>
+		<add><![CDATA[width="', $attachment['width'], '" height="', $attachment['height'], '" ]]></add>
+	</operation>
+</file>
+</modification>

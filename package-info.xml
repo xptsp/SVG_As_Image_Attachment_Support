@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>Dougiefresh:SVGSupport</id>
+	<name>SVG As Image Attachments Support</name>
+	<type>modification</type>
+	<version>1.0</version>
+
+	<install for="2.0 - 2.0.99">
+		<readme parsebbc="true">readme.txt</readme>
+		<modification>install_20x.xml</modification>
+		<require-file name="Subs-SVG.php" destination="$sourcedir" />
+	</install>
+	<uninstall for="2.0 - 2.0.99">
+		<modification reverse="true">install_20x.xml</modification>
+		<remove-file name="$sourcedir/Subs-SVG.php" />		
+	</uninstall>
+</package-info>
