@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:SVGSupport</id>
+<name>SVG As Image Attachments Support</name>
+<version>1.0.1</version>
+
+<file name="$languagedir/Admin.english.php">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['attachment_svg_header'] = 'SVG Attachments';
+$txt['attachment_svg_populate'] = 'This function will populate the width, height and mime type of any SVG attachments that do not have this information already populated in the attachments table.';
+$txt['attachment_svg_remove'] = 'This function will remove the width, height and mime type of any SVG attachments in the attachments table, thus restoring the original appearance of SVG images as attachments.';
+$txt['attachment_svg_pm_populate'] = 'This function will populate the width, height and mime type of any SVG attachments that do not have this information already populated in the PM attachments table.';
+$txt['attachment_svg_pm_remove'] = 'This function will remove the width, height and mime type of any SVG attachments in the PM attachments table, thus restoring the original appearance of SVG images as attachments.';
+]]></add>
+	</operation>
+</file>
+</modification>

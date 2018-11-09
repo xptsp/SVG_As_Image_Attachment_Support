@@ -1,0 +1,14 @@
+v1.0.1 - February 24th, 2016
+o Added additional security check to "svg_getimagesize" function.
+o Added function to convert SVGs to PNG or JPG when ImageMagic extensions are detected.
+o Added function to populate image dimension and mime types for SVG images already attached.
+o Added function to remove image dimension and mime types for SVG images already attached.
+o Added UI to address populating and removing image dimensions manually.
+o Added redirect to automatically populate SVG image dimensions after install.
+o Added uninstall code to remove image dimension and mime types for SVG images.
+o Added code to add width/height to thumbnail output for [b]ONLY[/b] SVG files.
+o Added code to disable Javascript for SVG thumbnails.  PNG/JPG thumbnails for SVG images still show.
+o Added code so that SVG attachments show up as images in PM attachments.
+
+v1.0 - February 23rd, 2016
+o Initial Release to the Public
